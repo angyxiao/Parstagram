@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 } else {
                     Log.e("LoginActivity", "Login failure.");
+                    Toast.makeText(MainActivity.this,"Wrong username or password", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
