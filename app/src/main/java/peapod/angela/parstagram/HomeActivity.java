@@ -1,11 +1,13 @@
 package peapod.angela.parstagram;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -57,6 +59,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void createPost(String description, ParseFile imageFile, ParseUser user) {
+        final Intent intent = new Intent(HomeActivity.this, PostActivity.class);
+        startActivity(intent);
+
         final Post newPost = new Post();
         newPost.setDescription(description);
         newPost.setImage(imageFile);
@@ -67,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d("HomeActivity", "Create post success!");
+                    Toast.makeText(HomeActivity.this, "Created post!", Toast.LENGTH_LONG);
                 } else {
                     e.printStackTrace();
                 }

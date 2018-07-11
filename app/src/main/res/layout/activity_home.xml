@@ -17,12 +17,13 @@
 
     <Button
         android:id="@+id/createBtn"
-        android:layout_marginTop="20dp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/description"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
+        android:onClick="createPost"
         android:text="Create" />
 
     <Button
@@ -43,6 +44,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="77dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>
