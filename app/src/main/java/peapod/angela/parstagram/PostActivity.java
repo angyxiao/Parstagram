@@ -1,14 +1,19 @@
 package peapod.angela.parstagram;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -31,11 +36,16 @@ public class PostActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_post);
         onLaunchCamera();
     }
 
-    public static void fixMediaDir() {
+    public void fixMediaDir() {
+        // grant URI permissions
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
+        }
+
         File sdcard = Environment.getExternalStorageDirectory();
         if (sdcard == null) { return; }
         File dcim = new File(sdcard, "DCIM");
@@ -46,15 +56,19 @@ public class PostActivity extends AppCompatActivity{
     }
 
     public void onLaunchCamera() {
+        fixMediaDir();
+
         // create Intent to take a picture and return control to the calling application
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
         // Create a File reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);
 
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(PostActivity.this, "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(PostActivity.this, "peapod.angela.parstagram", photoFile);
+
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
@@ -63,21 +77,6 @@ public class PostActivity extends AppCompatActivity{
             // Start the image capture intent to take photo
             startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                ex.printStackTrace();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.codepath.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-            }
         }
     }
 
@@ -105,13 +104,13 @@ public class PostActivity extends AppCompatActivity{
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // RESIZE BITMAP, see section below
+            // RESIZE BITMAP, see section below
                 try {
                     takenImage = BitmapFactory.decodeFile(resizeBitMap().getAbsolutePath());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                // Load the taken image into a preview
+            // Load the taken image into a preview
                 ImageView ivPreview = (ImageView) findViewById(R.id.ivImage);
                 ivPreview.setImageBitmap(takenImage);
             } else { // Result was a failure
@@ -121,17 +120,22 @@ public class PostActivity extends AppCompatActivity{
     }
 
     public File resizeBitMap() throws IOException {
-        Uri takenPhotoUri = FileProvider.getUriForFile(PostActivity.this, "com.codepath.fileprovider", getPhotoFileUri(photoFileName));
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        Uri takenPhotoUri = FileProvider.getUriForFile(PostActivity.this, "peapod.angela.parstagram", getPhotoFileUri(photoFileName));
         // by this point we have the camera photo on disk
-        Bitmap rawTakenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+        Bitmap rawTakenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
         // See BitmapScaler.java: https://gist.github.com/nesquena/3885707fd3773c09f1bb
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(rawTakenImage, rawTakenImage.getWidth()/2, rawTakenImage.getHeight()/2, false);
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(rawTakenImage, width, height, false);
         // Configure byte output stream
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         // Compress the image further
         resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
         // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
-        Uri resizedUri = FileProvider.getUriForFile(PostActivity.this, "com.codepath.fileprovider", getPhotoFileUri(photoFileName + "_resized"));
+        Uri resizedUri = FileProvider.getUriForFile(PostActivity.this, "peapod.angela.parstagram", getPhotoFileUri(photoFileName + "_resized"));
         File resizedFile = new File(resizedUri.getPath());
         resizedFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(resizedFile);
