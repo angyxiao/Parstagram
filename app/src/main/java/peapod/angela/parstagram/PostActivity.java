@@ -45,7 +45,6 @@ public class PostActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         onLaunchCamera();
-        createPost(findViewById(R.id.publishBtn));
     }
 
     public void fixMediaDir() {
@@ -118,9 +117,12 @@ public class PostActivity extends AppCompatActivity{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                setContentView(R.layout.activity_post);
+
                 // Load the taken image into a preview
-                ImageView ivPreview = (ImageView) findViewById(R.id.ivImage);
-                ivPreview.setImageBitmap(takenImage);
+                ImageView ivImage = (ImageView) findViewById(R.id.ivImage);
+                ivImage.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }

@@ -124,4 +124,5 @@ public class HomeActivity extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
         finish();
     }
+
 }
