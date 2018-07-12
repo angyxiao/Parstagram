@@ -56,13 +56,6 @@ public class HomeActivity extends AppCompatActivity {
     private void launchPost(View view) {
         final Intent intent = new Intent(HomeActivity.this, PostActivity.class);
         startActivityForResult(intent, CREATE_CODE);
-
-        final String captionText = caption;
-        final ParseUser user = ParseUser.getCurrentUser();
-        final File file = new File(imagePath);
-        final ParseFile parseFile = new ParseFile(file);
-
-        createPost(captionText, parseFile, user);
     }
 
     private void createPost(String captionText, ParseFile imageFile, ParseUser user) {
@@ -114,6 +107,13 @@ public class HomeActivity extends AppCompatActivity {
                     String text = data.getStringExtra("caption");
                     imagePath = image;
                     caption = text;
+
+                    final String captionText = caption;
+                    final ParseUser user = ParseUser.getCurrentUser();
+                    final File file = new File(imagePath);
+                    final ParseFile parseFile = new ParseFile(file);
+
+                    createPost(captionText, parseFile, user);
                 }
                 break;
         }
