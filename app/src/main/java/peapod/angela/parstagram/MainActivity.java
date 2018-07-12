@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("LoginActivity", "Login successful!");
             final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
-            finish();
+            clear();
         } else {
             setContentView(R.layout.activity_main);
 
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("LoginActivity", "Login successful!");
                     final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
-                    finish();
+                    clear();
                 } else {
                     Log.e("LoginActivity", "Login failure.");
                     Toast.makeText(MainActivity.this,"Wrong username or password", Toast.LENGTH_LONG).show();
@@ -64,5 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void clear() {
+        usernameInput.setText("");
+        passwordInput.setText("");
     }
 }
