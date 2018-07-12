@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clear() {
-        usernameInput.setText("");
-        passwordInput.setText("");
+        if (usernameInput != null && passwordInput != null) {
+            usernameInput.setText("");
+            passwordInput.setText("");
+        }
     }
 }
