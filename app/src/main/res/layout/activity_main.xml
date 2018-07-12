@@ -51,10 +51,20 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="306dp"
+        android:layout_width="300dp"
         android:layout_height="63dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="50dp"
         app:srcCompat="@drawable/nav_logo_whiteout" />
+
+    <Button
+        android:id="@+id/signupBtn"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimary"
+        android:text="Don't have an account? Sign up" />
 </RelativeLayout>
