@@ -1,12 +1,12 @@
 package peapod.angela.parstagram;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -21,9 +21,10 @@ import java.util.List;
 import peapod.angela.parstagram.model.Post;
 
 public class HomeActivity extends AppCompatActivity {
+    private final int CREATE_CODE = 1;
 
-    private static final String imagePath = "";
-    private EditText descriptionInput;
+    private String imagePath;
+    private String caption;
     private Button createButton;
     private Button refreshButton;
 
@@ -34,19 +35,13 @@ public class HomeActivity extends AppCompatActivity {
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        descriptionInput = findViewById(R.id.description);
         createButton = findViewById(R.id.createBtn);
         refreshButton = findViewById(R.id.refreshBtn);
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String description = descriptionInput.getText().toString();
-                final ParseUser user = ParseUser.getCurrentUser();
-                final File file = new File(imagePath);
-                final ParseFile parseFile = new ParseFile(file);
-
-                createPost(description, parseFile, user);
+                launchPost(view);
             }
         });
 
@@ -58,12 +53,21 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void createPost(String description, ParseFile imageFile, ParseUser user) {
+    private void launchPost(View view) {
         final Intent intent = new Intent(HomeActivity.this, PostActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, CREATE_CODE);
 
+        final String captionText = caption;
+        final ParseUser user = ParseUser.getCurrentUser();
+        final File file = new File(imagePath);
+        final ParseFile parseFile = new ParseFile(file);
+
+        createPost(captionText, parseFile, user);
+    }
+
+    private void createPost(String captionText, ParseFile imageFile, ParseUser user) {
         final Post newPost = new Post();
-        newPost.setDescription(description);
+        newPost.setDescription(captionText);
         newPost.setImage(imageFile);
         newPost.setUser(user);
 
@@ -98,5 +102,20 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case CREATE_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    String image = data.getStringExtra("image");
+                    String text = data.getStringExtra("caption");
+                    imagePath = image;
+                    caption = text;
+                }
+                break;
+        }
     }
 }

@@ -22,21 +22,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        usernameInput = findViewById(R.id.username);
-        passwordInput = findViewById(R.id.password);
-        loginBtn = findViewById(R.id.loginBtn);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            Log.d("LoginActivity", "Login successful!");
+            final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            setContentView(R.layout.activity_main);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String username = usernameInput.getText().toString();
-                final String password = passwordInput.getText().toString();
+            usernameInput = findViewById(R.id.username);
+            passwordInput = findViewById(R.id.password);
+            loginBtn = findViewById(R.id.loginBtn);
 
-                login(username, password);
-            }
-        });
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final String username = usernameInput.getText().toString();
+                    final String password = passwordInput.getText().toString();
+
+                    login(username, password);
+                }
+            });
+        }
     }
 
     private void login(String username, String password) {

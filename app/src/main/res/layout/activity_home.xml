@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
-        android:onClick="createPost"
+        android:onClick="launchPostCreate"
         android:text="Create" />
 
     <Button
