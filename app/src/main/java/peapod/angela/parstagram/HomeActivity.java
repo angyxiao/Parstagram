@@ -118,4 +118,10 @@ public class HomeActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void logout(View view) {
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+        finish();
+    }
 }
