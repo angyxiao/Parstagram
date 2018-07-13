@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -93,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         newPost.setImage(imageFile);
         newPost.setUser(user);
         newPost.setPath(path);
-        newPost.setDate(date);
+        newPost.setTime(date);
 
         newPost.saveInBackground(new SaveCallback() {
             @Override
@@ -112,6 +113,7 @@ public class HomeActivity extends AppCompatActivity {
     private void loadTopPosts() {
         final Post.Query postsQuery = new Post.Query();
         postsQuery.getTop().withUser();
+        postsQuery.orderByAscending("time");
 
         postsQuery.findInBackground(new FindCallback<Post>() {
             @Override
@@ -134,6 +136,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // on some click or some loading we need to wait for...
+        ProgressBar pb = (ProgressBar) findViewById(R.id.pbLoading);
+        pb.setVisibility(ProgressBar.VISIBLE);
+
         switch (requestCode) {
             case CREATE_CODE:
                 if (resultCode == Activity.RESULT_OK) {
@@ -155,6 +162,11 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 break;
         }
+
+        loadTopPosts();
+
+        // run a background job and once complete
+        pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
     public void logout() {

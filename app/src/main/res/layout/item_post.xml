@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/postUser"
+        android:layout_marginLeft="10dp"
         android:layout_toEndOf="@+id/postUser" />
 
 </RelativeLayout>
