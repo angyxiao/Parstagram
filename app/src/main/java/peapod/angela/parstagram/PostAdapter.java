@@ -49,7 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 //      holder.postImage.setImageBitmap(BitmapFactory.decodeFile(post.getPath()));
         holder.postCaption.setText(post.getDescription());
         holder.postUser.setText("@" + post.getUser().getUsername());
-        // holder.postTime.setText(getRelativeTimeAgo(post.getTime()));
+        holder.postTime.setText(getRelativeTimeAgo(post.getTime()));
 
         Glide.with(context).load(post.getImage().getUrl()).into(holder.postImage);
     }
@@ -59,6 +59,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public ImageView postImage;
         public TextView postCaption;
         public TextView postUser;
+        public TextView postTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -67,6 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             postImage = itemView.findViewById(R.id.postImage);
             postCaption = itemView.findViewById(R.id.postCaption);
             postUser = itemView.findViewById(R.id.postUser);
+            postTime = itemView.findViewById(R.id.postTime);
             }
     }
 
@@ -76,7 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
-    public String getRelativeTimeAgo(String rawJsonDate) {
+    public static String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         sf.setLenient(true);

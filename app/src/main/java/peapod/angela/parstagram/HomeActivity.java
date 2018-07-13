@@ -20,6 +20,7 @@ import com.parse.SaveCallback;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import peapod.angela.parstagram.model.Post;
@@ -40,6 +41,27 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                loadTopPosts();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -59,17 +81,19 @@ public class HomeActivity extends AppCompatActivity {
         rvPosts.setAdapter(postAdapter);
         }
 
+
     private void launchPost() {
         final Intent intent = new Intent(HomeActivity.this, PostActivity.class);
         startActivityForResult(intent, CREATE_CODE);
     }
 
-    private void createPost(String captionText, ParseFile imageFile, ParseUser user, String path) {
+    private void createPost(String captionText, ParseFile imageFile, ParseUser user, String path, Date date) {
         final Post newPost = new Post();
         newPost.setDescription(captionText);
         newPost.setImage(imageFile);
         newPost.setUser(user);
         newPost.setPath(path);
+        newPost.setDate(date);
 
         newPost.saveInBackground(new SaveCallback() {
             @Override
@@ -113,6 +137,7 @@ public class HomeActivity extends AppCompatActivity {
         switch (requestCode) {
             case CREATE_CODE:
                 if (resultCode == Activity.RESULT_OK) {
+
                     String image = data.getStringExtra("image");
                     String text = data.getStringExtra("caption");
                     imagePath = image;
@@ -124,7 +149,9 @@ public class HomeActivity extends AppCompatActivity {
                     final ParseFile parseFile = new ParseFile(file);
                     final String path = imagePath;
 
-                    createPost(captionText, parseFile, user, path);
+                    final Date date = new Date(file.lastModified());
+
+                    createPost(captionText, parseFile, user, path, date);
                 }
                 break;
         }
