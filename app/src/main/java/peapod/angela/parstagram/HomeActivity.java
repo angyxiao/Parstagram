@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -31,8 +31,6 @@ public class HomeActivity extends AppCompatActivity {
     //TODO : context, make toolbar global
     private String imagePath;
     private String caption;
-    private Button createButton;
-    private Button refreshButton;
 
     PostAdapter postAdapter;
     ArrayList<Post> posts;
@@ -45,23 +43,9 @@ public class HomeActivity extends AppCompatActivity {
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        createButton = findViewById(R.id.createBtn);
-        refreshButton = findViewById(R.id.refreshBtn);
+        loadTopPosts();
+
         rvPosts = findViewById(R.id.postList);
-
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launchPost(view);
-            }
-        });
-
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadTopPosts();
-            }
-        });
 
         // initialize the arraylist (data source)
         posts = new ArrayList<>();
@@ -75,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         rvPosts.setAdapter(postAdapter);
         }
 
-    private void launchPost(View view) {
+    private void launchPost() {
         final Intent intent = new Intent(HomeActivity.this, PostActivity.class);
         startActivityForResult(intent, CREATE_CODE);
     }
@@ -146,10 +130,37 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void logout(View view) {
+    public void logout() {
         ParseUser.logOut();
         ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
         finish();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.ic_profile:
+                // launchProfile();
+                break;
+            case R.id.ic_create:
+                launchPost();
+                break;
+            case R.id.ic_logout:
+                logout();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

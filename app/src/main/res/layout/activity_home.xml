@@ -15,38 +15,6 @@
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"></android.support.v7.widget.Toolbar>
 
-    <Button
-        android:id="@+id/createBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/postList"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorPrimary"
-        android:onClick="launchPost"
-        android:text="Create" />
-
-    <Button
-        android:id="@+id/logoutBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/refreshBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:onClick="logout"
-        android:text="Logout" />
-
-    <Button
-        android:id="@+id/refreshBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/createBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:text="Refresh" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/postList"
         android:layout_width="match_parent"

@@ -48,7 +48,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         // populate the views according to this data
 //      holder.postImage.setImageBitmap(BitmapFactory.decodeFile(post.getPath()));
         holder.postCaption.setText(post.getDescription());
-        holder.postUser.setText(post.getUser().getUsername());
+        holder.postUser.setText("@" + post.getUser().getUsername());
         // holder.postTime.setText(getRelativeTimeAgo(post.getTime()));
 
         Glide.with(context).load(post.getImage().getUrl()).into(holder.postImage);
