@@ -36,7 +36,7 @@ public class PostActivity extends AppCompatActivity{
 
     public final String APP_TAG = "PostActivity";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-    public String photoFileName = "image";
+    public String photoFileName = "image.jpg";
     String photoPath;
     File photoFile;
 
@@ -112,11 +112,11 @@ public class PostActivity extends AppCompatActivity{
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // RESIZE BITMAP, see section below
-                try {
-                    takenImage = BitmapFactory.decodeFile(resizeBitMap().getAbsolutePath());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    takenImage = BitmapFactory.decodeFile(resizeBitMap().getAbsolutePath());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
                 setContentView(R.layout.activity_post);
 
@@ -145,7 +145,7 @@ public class PostActivity extends AppCompatActivity{
         // Compress the image further
         resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
         // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
-        Uri resizedUri = FileProvider.getUriForFile(PostActivity.this, "peapod.angela.parstagram", getPhotoFileUri(photoFileName + "_resized"));
+        Uri resizedUri = FileProvider.getUriForFile(PostActivity.this, "peapod.angela.parstagram", getPhotoFileUri(photoFileName));
         File resizedFile = new File(resizedUri.getPath());
         resizedFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(resizedFile);
@@ -224,10 +224,11 @@ public class PostActivity extends AppCompatActivity{
 
     public void createPost(View view) {
         // create image file to save
-        createImageFile();
+//        File file = createImageFile();
         // return the image path to home activity
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("image", photoPath);
+        String absolutePath = photoFile.getAbsolutePath();
+        resultIntent.putExtra("image", absolutePath);
         resultIntent.putExtra("caption", ((EditText) findViewById(R.id.caption)).getText().toString());
         setResult(Activity.RESULT_OK, resultIntent);
 
