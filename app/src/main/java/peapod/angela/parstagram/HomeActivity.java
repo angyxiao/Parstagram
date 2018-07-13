@@ -28,6 +28,7 @@ import peapod.angela.parstagram.model.Post;
 
 public class HomeActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeContainer;
+    ProgressBar pb;
 
     private final int CREATE_CODE = 1;
     //TODO : context, make toolbar global
@@ -112,6 +113,9 @@ public class HomeActivity extends AppCompatActivity {
                     loadTopPosts();
                     postAdapter.notifyDataSetChanged();
 
+                    // run a background job and once complete
+                    pb.setVisibility(ProgressBar.INVISIBLE);
+
                 } else {
                     e.printStackTrace();
                 }
@@ -148,7 +152,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // on some click or some loading we need to wait for...
-        ProgressBar pb = (ProgressBar) findViewById(R.id.pbLoading);
+        pb = (ProgressBar) findViewById(R.id.pbLoading);
         pb.setVisibility(ProgressBar.VISIBLE);
 
         switch (requestCode) {
@@ -173,10 +177,6 @@ public class HomeActivity extends AppCompatActivity {
                 break;
         }
 
-        loadTopPosts();
-
-        // run a background job and once complete
-        pb.setVisibility(ProgressBar.INVISIBLE);
     }
 
     public void logout() {
