@@ -52,7 +52,11 @@ public class HomeActivity extends AppCompatActivity {
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
+
+                // refresh adapter with new posts
                 loadTopPosts();
+                postAdapter.notifyDataSetChanged();
+
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -102,7 +106,12 @@ public class HomeActivity extends AppCompatActivity {
                 if (e == null) {
                     posts.add(newPost);
                     Log.d("HomeActivity", "Create post success!");
-                    Toast.makeText(HomeActivity.this, "Created post!", Toast.LENGTH_LONG);
+                    Toast.makeText(HomeActivity.this, "Created post!", Toast.LENGTH_LONG).show();
+
+                    // refresh adapter with new posts
+                    loadTopPosts();
+                    postAdapter.notifyDataSetChanged();
+
                 } else {
                     e.printStackTrace();
                 }
@@ -119,6 +128,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 if (e == null) {
+                    posts.clear();
                     for (int i = 0; i < objects.size(); i++) {
                         Log.d("HomeActivity", "Post[" + i + "] = "
                                 + objects.get(i).getDescription()

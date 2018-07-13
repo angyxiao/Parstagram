@@ -16,6 +16,9 @@ public class Post extends ParseObject{
     private static final String KEY_PATH = "path";
     private static final String KEY_CREATED = "time";
 
+    public Post() {
+    }
+
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
     }

@@ -6,7 +6,7 @@
     android:background="@color/colorBackground">
 
     <ImageView
-        android:id="@+id/postImage"
+        android:id="@+id/detailsImage"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_alignParentTop="true"
@@ -15,28 +15,36 @@
         app:srcCompat="@android:color/background_dark" />
 
     <TextView
-        android:id="@+id/postCaption"
+        android:id="@+id/detailsCaption"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/postUser"
-        android:layout_alignLeft="@+id/postUser"
+        android:layout_alignLeft="@+id/detailsUser"
+        android:layout_below="@+id/detailsUser"
         android:paddingBottom="10dp"
         android:textAppearance="@android:style/TextAppearance.Medium" />
 
     <TextView
-        android:id="@+id/postUser"
+        android:id="@+id/detailsUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/postImage"
-        android:layout_below="@+id/postImage"
+        android:layout_alignLeft="@+id/detailsImage"
+        android:layout_below="@+id/detailsImage"
         android:layout_marginTop="5dp" />
 
     <TextView
-        android:id="@+id/postTime"
+        android:id="@+id/detailsTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/postUser"
+        android:layout_alignTop="@+id/detailsUser"
         android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/postUser" />
+        android:layout_toEndOf="@+id/detailsUser" />
+
+    <ListView
+        android:id="@+id/detailsComments"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
 
 </RelativeLayout>

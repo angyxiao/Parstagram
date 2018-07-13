@@ -1,6 +1,7 @@
 package peapod.angela.parstagram;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -11,8 +12,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.parceler.Parcels;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,9 +24,9 @@ import peapod.angela.parstagram.model.Post;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
-    private List<Post> mPosts;
+    private static List<Post> mPosts;
     private static Post post;
-    Context context;
+    static Context context;
     // pass in the Posts array in the constructor
     public PostAdapter(List<Post> posts) {
         mPosts = posts;
@@ -55,7 +59,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     // create ViewHolder class
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public ImageView postImage;
         public TextView postCaption;
         public TextView postUser;
@@ -69,7 +73,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             postCaption = itemView.findViewById(R.id.postCaption);
             postUser = itemView.findViewById(R.id.postUser);
             postTime = itemView.findViewById(R.id.postTime);
+
+            itemView.setOnClickListener(this);
             }
+
+        public void onClick(View view) {
+            // gets item position
+            int position = getAdapterPosition();
+            // make sure the position is valid, i.e. actually exists in the view
+            if (position != RecyclerView.NO_POSITION) {
+                // get the movie at the position, this won't work if the class is static
+                Post post = mPosts.get(position);
+                // create intent for the new activity
+                Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
+                // show the activity
+                context.startActivity(intent);
+            }
+        }
     }
 
     @Override
@@ -104,6 +125,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     // Add a list of items -- change to type used
     public void addAll(List<Post> list) {
         mPosts.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void refresh(ArrayList<Post> posts) {
+        mPosts.clear();
+        mPosts.addAll(posts);
         notifyDataSetChanged();
     }
 }
