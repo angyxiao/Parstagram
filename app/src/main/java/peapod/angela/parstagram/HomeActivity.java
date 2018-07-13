@@ -113,7 +113,7 @@ public class HomeActivity extends AppCompatActivity {
     private void loadTopPosts() {
         final Post.Query postsQuery = new Post.Query();
         postsQuery.getTop().withUser();
-        postsQuery.orderByAscending("time");
+        postsQuery.orderByDescending("time");
 
         postsQuery.findInBackground(new FindCallback<Post>() {
             @Override
