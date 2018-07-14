@@ -16,10 +16,10 @@
         app:srcCompat="@drawable/nav_logo_whiteout" />
 
     <EditText
-        android:id="@+id/passwordEntry"
+        android:id="@+id/profileEntry"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profileEntry"
+        android:layout_below="@+id/passwordEntry"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:ems="10"
@@ -27,7 +27,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/profileEntry"
+        android:id="@+id/passwordEntry"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/insta_logo"
@@ -66,7 +66,7 @@
         android:id="@+id/signupBtn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordEntry"
+        android:layout_below="@+id/profileEntry"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
