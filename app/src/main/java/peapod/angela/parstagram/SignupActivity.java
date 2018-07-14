@@ -32,7 +32,15 @@ public class SignupActivity extends MainActivity {
         user.setUsername(username.getText().toString());
         user.setPassword(password.getText().toString());
         user.setEmail(email.getText().toString());
-        ParseUser.getCurrentUser().add("profile", profileImage.getText().toString());
+
+//        try {
+//            URL url = new URL(profileImage.getText().toString());
+//            File f = FileUtils.toFile(url);
+//            ParseFile parseFile = new ParseFile(f);
+//            ParseUser.getCurrentUser().add("profile", parseFile);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         // Invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {

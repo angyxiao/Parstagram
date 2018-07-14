@@ -38,7 +38,9 @@ public class DetailsActivity extends AppCompatActivity {
 
         // set the layout views
         Glide.with(context).load(post.getImage().getUrl()).into(image);
-        Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("profile").getUrl()).into(profile);
+        if (ParseUser.getCurrentUser().getParseFile("profile") != null) {
+            Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("profile").getUrl()).into(profile);
+        }
 
         username.setText("@" + post.getUser().getUsername());
         time.setText(post.getTime().toString());

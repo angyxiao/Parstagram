@@ -57,7 +57,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.postTime.setText(post.getTime().toString());
 
         Glide.with(context).load(post.getImage().getUrl()).into(holder.postImage);
-        Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("profile").getUrl()).into(holder.postProfile);
+        if (ParseUser.getCurrentUser().getParseFile("profile") != null) {
+            Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("profile").getUrl()).into(holder.postProfile);
+        }
     }
 
     // create ViewHolder class
