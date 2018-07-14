@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -56,6 +57,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.postTime.setText(post.getTime().toString());
 
         Glide.with(context).load(post.getImage().getUrl()).into(holder.postImage);
+        Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("profile").getUrl()).into(holder.postProfile);
     }
 
     // create ViewHolder class
@@ -64,6 +66,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public TextView postCaption;
         public TextView postUser;
         public TextView postTime;
+        public ImageView postProfile;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -73,6 +76,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             postCaption = itemView.findViewById(R.id.postCaption);
             postUser = itemView.findViewById(R.id.postUser);
             postTime = itemView.findViewById(R.id.postTime);
+            postProfile = itemView.findViewById(R.id.postProfile);
 
             itemView.setOnClickListener(this);
             }

@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/detailsImage"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:paddingTop="10dp"
@@ -16,10 +16,11 @@
 
     <TextView
         android:id="@+id/detailsCaption"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/detailsUser"
+        android:layout_toRightOf="@+id/detailsProfile"
         android:layout_below="@+id/detailsUser"
+        android:layout_marginLeft="10dp"
         android:paddingBottom="10dp"
         android:textAppearance="@android:style/TextAppearance.Medium" />
 
@@ -29,22 +30,31 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/detailsImage"
         android:layout_below="@+id/detailsImage"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/detailsTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/detailsUser"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/detailsUser" />
+        android:layout_above="@+id/detailsCaption"
+        android:layout_alignStart="@+id/detailsCaption"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:id="@+id/detailsProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/detailsImage"
+        android:layout_alignTop="@+id/detailsCaption"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/ic_profile" />
 
     <ListView
         android:id="@+id/detailsComments"
         android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_height="197dp"
+        android:layout_marginTop="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

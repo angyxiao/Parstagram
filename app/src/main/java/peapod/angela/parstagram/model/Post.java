@@ -15,6 +15,8 @@ public class Post extends ParseObject{
     private static final String KEY_USER = "user";
     private static final String KEY_PATH = "path";
     private static final String KEY_CREATED = "time";
+    private static final String KEY_PROFILE = "profile";
+
 
     public Post() {
     }
@@ -54,6 +56,10 @@ public class Post extends ParseObject{
     public void setTime(Date date) {
         put(KEY_CREATED, date);
     }
+
+    public ParseFile getProfile() { return getUser().getParseFile(KEY_PROFILE);}
+
+    //public void setProfile(String path) { getUser().put(KEY_PROFILE, path);}
 
     public static class Query extends ParseQuery<Post> {
         public Query() {

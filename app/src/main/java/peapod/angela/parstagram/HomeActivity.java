@@ -200,7 +200,7 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.ic_profile:
-                // launchProfile();
+                launchProfile();
                 break;
             case R.id.ic_create:
                 launchPost();
@@ -211,5 +211,10 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void launchProfile() {
+        final Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+        startActivity(intent);
     }
 }

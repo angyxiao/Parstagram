@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -33,9 +34,12 @@ public class DetailsActivity extends AppCompatActivity {
         TextView time = findViewById(R.id.detailsTime);
         TextView caption = findViewById(R.id.detailsCaption);
         ListView comments = findViewById(R.id.detailsComments);
+        ImageView profile = findViewById(R.id.detailsProfile);
 
         // set the layout views
         Glide.with(context).load(post.getImage().getUrl()).into(image);
+        Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("profile").getUrl()).into(profile);
+
         username.setText("@" + post.getUser().getUsername());
         time.setText(post.getTime().toString());
         caption.setText(post.getDescription());

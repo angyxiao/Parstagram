@@ -9,6 +9,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+
 public class SignupActivity extends MainActivity {
 
     @Override
@@ -25,11 +26,13 @@ public class SignupActivity extends MainActivity {
         EditText email = findViewById(R.id.emailEntry);
         EditText username = findViewById(R.id.usernameEntry);
         EditText password = findViewById(R.id.passwordEntry);
+        EditText profileImage = findViewById(R.id.profileEntry);
 
         // Set core properties
         user.setUsername(username.getText().toString());
         user.setPassword(password.getText().toString());
         user.setEmail(email.getText().toString());
+        ParseUser.getCurrentUser().add("profile", profileImage.getText().toString());
 
         // Invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {

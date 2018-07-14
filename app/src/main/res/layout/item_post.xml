@@ -16,10 +16,11 @@
 
     <TextView
         android:id="@+id/postCaption"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/postProfile"
         android:layout_below="@+id/postUser"
-        android:layout_alignLeft="@+id/postUser"
+        android:layout_marginLeft="10dp"
         android:paddingBottom="10dp"
         android:textAppearance="@android:style/TextAppearance.Medium" />
 
@@ -29,14 +30,23 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/postImage"
         android:layout_below="@+id/postImage"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/postTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/postUser"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/postUser" />
+        android:layout_above="@+id/postCaption"
+        android:layout_alignStart="@+id/postCaption"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:id="@+id/postProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/postImage"
+        android:layout_alignTop="@+id/postCaption"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/ic_profile" />
 
 </RelativeLayout>

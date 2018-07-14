@@ -28,6 +28,7 @@
         <activity android:name=".PostActivity"></activity>
         <activity android:name=".SignupActivity"></activity>
         <activity android:name=".DetailsActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
 
         <!-- make sure within the application tag, otherwise app will crash with XmlResourceParser errors -->
         <provider
