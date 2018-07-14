@@ -29,7 +29,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         username.setText("@" + ParseUser.getCurrentUser().getUsername());
         ParseUser currUser = ParseUser.getCurrentUser();
-        ParseFile profile = currUser.getParseFile(KEY_PROFILE_IMAGE);
-        Glide.with(context).load(profile.getUrl()).into(image);
+        if (currUser.getParseFile(KEY_PROFILE_IMAGE) != null) {
+            ParseFile profile = currUser.getParseFile(KEY_PROFILE_IMAGE);
+            Glide.with(context).load(profile.getUrl()).into(image);
+        }
     }
 }
